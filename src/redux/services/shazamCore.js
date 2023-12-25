@@ -24,11 +24,21 @@ export const shazamApi=createApi({
     },
   }),
   endpoints:(builder)=>({
-    getTopCharts:builder.query({query:()=>'/charts/track'})
+    getTopCharts:builder.query({query:()=>'/charts/track'}),
+    getArtistDetails: builder.query({ query: (artistId) => `/artists/get-details?artist_id=${artistId}` }),
+    getSongDetails: builder.query({ query: ({ songid }) => `/songs/v2/get-details?track_id=${songid}` }),
+    getSongRelated: builder.query({ query: ({ songid }) => `/shazam-songs/list-similarities?track_id=${songid}` }),
+    getSongsBySearch: builder.query({ query: (searchTerm) => `v1/search/multi?search_type=SONGS_ARTISTS&query=${searchTerm}` }),
+    getSongsByCountry: builder.query({ query: (countryCode) => `v1/charts/country?country_code=${countryCode}` }),
   })
 });
 
 export const {
   useGetTopChartsQuery,
+  useGetArtistDetailsQuery,
+  useGetSongDetailsQuery,
+  useGetSongRelatedQuery,
+  useGetSongsBySearchQuery,
+  useGetSongsByCountryQuery,
 }=shazamApi;
 
